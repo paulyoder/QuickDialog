@@ -141,6 +141,10 @@
 		D8F180E813F0599A009B0CD0 /* jsonremote.json in Resources */ = {isa = PBXBuildFile; fileRef = D8F180E813F0599A009B0CCF /* jsonremote.json */; };
 		D8F180E813F0599A009B0CD2 /* QuickDialogWebController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8F180E813F0599A009B0CD1 /* QuickDialogWebController.m */; };
 		D8F180E813F0599A009B0CD4 /* QuickDialogWebController.h in Headers */ = {isa = PBXBuildFile; fileRef = D8F180E813F0599A009B0CD3 /* QuickDialogWebController.h */; };
+		DA98D6051575697200E9CB76 /* QNumberElement.h in Headers */ = {isa = PBXBuildFile; fileRef = DA98D6031575697200E9CB76 /* QNumberElement.h */; };
+		DA98D6061575697200E9CB76 /* QNumberElement.m in Sources */ = {isa = PBXBuildFile; fileRef = DA98D6041575697200E9CB76 /* QNumberElement.m */; };
+		DA98D60E15756A5B00E9CB76 /* QNumberTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = DA98D60C15756A5B00E9CB76 /* QNumberTableViewCell.h */; };
+		DA98D60F15756A5B00E9CB76 /* QNumberTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DA98D60D15756A5B00E9CB76 /* QNumberTableViewCell.m */; };
 		F209CEE41536AB100043F61C /* PeriodPickerValueParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F209CEE31536AB100043F61C /* PeriodPickerValueParser.m */; };
 		F2E6149E151C9E4D00F36976 /* QSelectSection.h in Headers */ = {isa = PBXBuildFile; fileRef = F2E6149C151C9E4D00F36976 /* QSelectSection.h */; };
 		F2E6149F151C9E4D00F36976 /* QSelectSection.m in Sources */ = {isa = PBXBuildFile; fileRef = F2E6149D151C9E4D00F36976 /* QSelectSection.m */; };
@@ -314,6 +318,10 @@
 		D8F180E813F0599A009B0CCF /* jsonremote.json */ = {isa = PBXFileReference; lastKnownFileType = file.json; name = jsonremote.json; path = sample/Resources/jsonremote.json; sourceTree = SOURCE_ROOT; };
 		D8F180E813F0599A009B0CD1 /* QuickDialogWebController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickDialogWebController.m; path = quickdialog/QuickDialogWebController.m; sourceTree = SOURCE_ROOT; };
 		D8F180E813F0599A009B0CD3 /* QuickDialogWebController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuickDialogWebController.h; path = quickdialog/QuickDialogWebController.h; sourceTree = SOURCE_ROOT; };
+		DA98D6031575697200E9CB76 /* QNumberElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QNumberElement.h; path = quickdialog/QNumberElement.h; sourceTree = SOURCE_ROOT; };
+		DA98D6041575697200E9CB76 /* QNumberElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QNumberElement.m; path = quickdialog/QNumberElement.m; sourceTree = SOURCE_ROOT; };
+		DA98D60C15756A5B00E9CB76 /* QNumberTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QNumberTableViewCell.h; path = quickdialog/QNumberTableViewCell.h; sourceTree = SOURCE_ROOT; };
+		DA98D60D15756A5B00E9CB76 /* QNumberTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QNumberTableViewCell.m; path = quickdialog/QNumberTableViewCell.m; sourceTree = SOURCE_ROOT; };
 		F209CEE21536AB100043F61C /* PeriodPickerValueParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeriodPickerValueParser.h; path = sample/PeriodPickerValueParser.h; sourceTree = SOURCE_ROOT; };
 		F209CEE31536AB100043F61C /* PeriodPickerValueParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeriodPickerValueParser.m; path = sample/PeriodPickerValueParser.m; sourceTree = SOURCE_ROOT; };
 		F2E6149C151C9E4D00F36976 /* QSelectSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSelectSection.h; path = quickdialog/QSelectSection.h; sourceTree = SOURCE_ROOT; };
@@ -505,6 +513,10 @@
 				D8F180E813F0599A009B0C9A /* QDecimalTableViewCell.m */,
 				D8F180E813F0599A009B0C99 /* QDecimalElement.h */,
 				D8F180E813F0599A009B0C97 /* QDecimalElement.m */,
+				DA98D6031575697200E9CB76 /* QNumberElement.h */,
+				DA98D6041575697200E9CB76 /* QNumberElement.m */,
+				DA98D60C15756A5B00E9CB76 /* QNumberTableViewCell.h */,
+				DA98D60D15756A5B00E9CB76 /* QNumberTableViewCell.m */,
 				D811F88413EC905B00E3922B /* QBadgeElement.h */,
 				D811F88513EC905B00E3922B /* QBadgeElement.m */,
 				D811F88613EC905B00E3922B /* QBadgeTableCell.h */,
@@ -670,6 +682,8 @@
 				F2F23A22152DD48B00EB6685 /* QPickerTableViewCell.h in Headers */,
 				F2F23A24152DD48B00EB6685 /* QPickerValueParser.h in Headers */,
 				F2F23A25152DD48B00EB6685 /* QPickerWhitespaceDelimitedStringParser.h in Headers */,
+				DA98D6051575697200E9CB76 /* QNumberElement.h in Headers */,
+				DA98D60E15756A5B00E9CB76 /* QNumberTableViewCell.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -825,6 +839,8 @@
 				F2F23A21152DD48B00EB6685 /* QPickerElement.m in Sources */,
 				F2F23A23152DD48B00EB6685 /* QPickerTableViewCell.m in Sources */,
 				F2F23A26152DD48B00EB6685 /* QPickerWhitespaceDelimitedStringParser.m in Sources */,
+				DA98D6061575697200E9CB76 /* QNumberElement.m in Sources */,
+				DA98D60F15756A5B00E9CB76 /* QNumberTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
