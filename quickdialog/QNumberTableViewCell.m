@@ -120,10 +120,10 @@
 }
 
 - (BOOL)invalidInput:(NSString *)value {
-  return ([self multipleDecimals:value] || [self tooManyDecimalPlaces:value] || [self tooManyWholeDigits:value]);
+  return ([self multipleDecimals:value] || [self tooManyFractionDigits:value] || [self tooManyWholeDigits:value]);
 }
 
-- (BOOL)tooManyDecimalPlaces:(NSString *)value {
+- (BOOL)tooManyFractionDigits:(NSString *)value {
   NSUInteger decimalIndexOf = [value rangeOfString:@"."].location;
   if (decimalIndexOf == NSNotFound)
     return NO;
