@@ -14,6 +14,7 @@
 }
 
 @property(nonatomic, assign) float floatValue;
+@property(nonatomic, assign) NSUInteger wholeDigits;
 @property(nonatomic, assign) NSUInteger fractionDigits;
 @property(nonatomic, copy) NSString * prependText;
 @property(nonatomic, copy) NSString * appendText;

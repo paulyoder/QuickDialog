@@ -120,7 +120,7 @@
 }
 
 - (BOOL)invalidInput:(NSString *)value {
-  return ([self multipleDecimals:value] || [self tooManyDecimalPlaces:value]);
+  return ([self multipleDecimals:value] || [self tooManyDecimalPlaces:value] || [self tooManyWholeDigits:value]);
 }
 
 - (BOOL)tooManyDecimalPlaces:(NSString *)value {
@@ -132,6 +132,18 @@
   QNumberElement *el = (QNumberElement *)_entryElement;
   
   return (decimalPlaces > el.fractionDigits);
+}
+
+- (BOOL)tooManyWholeDigits:(NSString *)value {
+  QNumberElement *el = (QNumberElement *)_entryElement;
+  if (el.wholeDigits == 0)
+    return NO;
+  
+  NSUInteger decimalIndexOf = [value rangeOfString:@"."].location;
+  if (decimalIndexOf == NSNotFound)
+    decimalIndexOf = value.length;
+  
+  return (decimalIndexOf > el.wholeDigits);
 }
 
 - (BOOL)multipleDecimals:(NSString *)value {

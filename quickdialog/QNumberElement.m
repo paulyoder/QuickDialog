@@ -17,6 +17,7 @@
 }
 
 @synthesize floatValue = _floatValue;
+@synthesize wholeDigits = _wholeDigits;
 @synthesize fractionDigits = _fractionDigits;
 @synthesize prependText = _prependText;
 @synthesize appendText = _appendText;
@@ -26,7 +27,6 @@
   _floatValue = value;
   return self;
 }
-
 
 - (QNumberElement *)initWithValue:(float)value {
   self = [super init];
