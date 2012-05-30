@@ -20,7 +20,7 @@
     [self createSubviews];
 		self.selectionStyle = UITableViewCellSelectionStyleNone;
     _numberFormatter = [[NSNumberFormatter alloc] init];
-    [_numberFormatter setPositiveFormat:@"#,###.###"];
+    [_numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
   };
   return self;
 }
@@ -49,12 +49,17 @@
 - (void)updateTextFieldFromElement:(BOOL)addPrependAppendText {
   NSString * value = @"";
   QNumberElement *el = (QNumberElement *)_entryElement;
+  [_numberFormatter setMaximumFractionDigits:[self numberElement].fractionDigits];
   NSString * formattedNumber = [_numberFormatter stringFromNumber:[NSNumber numberWithFloat:el.floatValue]];
+  
   if (addPrependAppendText && el.prependText != nil)
     value = [value stringByAppendingString:el.prependText];
+  
   value = [value stringByAppendingString:formattedNumber];
+  
   if (addPrependAppendText && el.appendText != nil)
     value = [value stringByAppendingString:el.appendText];
+  
   _textField.text = value;
 }
 
@@ -73,12 +78,14 @@
       [result appendString:charStr];
     }
   }
+  [_numberFormatter setMaximumFractionDigits:[self numberElement].fractionDigits];
   [self numberElement].floatValue = [[_numberFormatter numberFromString:result] floatValue];
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)replacement {
   NSString *newValue = [_textField.text stringByReplacingCharactersInRange:range withString:replacement];
-  newValue = [self removeMultipleDecimals:newValue];
+  if ([self invalidInput:newValue])
+    return NO;
   
   [self updateElementFromTextField:newValue];
   [self updateTextFieldFromElement:NO];
@@ -112,28 +119,42 @@
   [super textFieldDidEndEditing:textField];
 }
 
-- (NSString *)removeMultipleDecimals:(NSString *)value {
-  BOOL foundDecimal = NO;
-  NSMutableString *result = [[NSMutableString alloc] init];
+- (BOOL)invalidInput:(NSString *)value {
+  return ([self multipleDecimals:value] || [self tooManyDecimalPlaces:value]);
+}
+
+- (BOOL)tooManyDecimalPlaces:(NSString *)value {
+  NSUInteger decimalIndexOf = [value rangeOfString:@"."].location;
+  if (decimalIndexOf == NSNotFound)
+    return NO;
+
+  NSUInteger decimalPlaces = (value.length - decimalIndexOf - 1);
+  QNumberElement *el = (QNumberElement *)_entryElement;
+  
+  return (decimalPlaces > el.fractionDigits);
+}
+
+- (BOOL)multipleDecimals:(NSString *)value {
+  BOOL oneDecimal = NO;
   for (NSUInteger i = 0; i< [value length]; i++){
     unichar c = [value characterAtIndex:i];
     NSString *charStr = [NSString stringWithCharacters:&c length:1];
-    if ([[NSCharacterSet decimalDigitCharacterSet] characterIsMember:c]) {
-      [result appendString:charStr];
-    }
     if ([charStr isEqualToString:@"."]) {
-      if (foundDecimal)
-        break;
+      if (oneDecimal)
+        return YES;
       
-      foundDecimal = YES;
-      [result appendString:charStr];
+      oneDecimal = YES;
     }
   }
-  return result;
+  return NO;
 }
 
 - (void)addTrailingDecimal:(NSString *)value {
   if (value.length == 0)
+    return;
+  
+  QNumberElement *el = (QNumberElement *)_entryElement;
+  if (el.fractionDigits == 0)
     return;
   
   NSString *lastChar = [value substringFromIndex:(value.length - 1)];
