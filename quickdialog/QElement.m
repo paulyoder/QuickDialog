@@ -31,6 +31,7 @@
 @synthesize height = _height;
 @synthesize controllerAccessoryAction = _controllerAccessoryAction;
 
+@synthesize labelingPolicy = _labelingPolicy;
 
 - (QElement *)init {
     self = [super init];
@@ -49,9 +50,15 @@
     if (cell == nil){
         cell = [[QTableViewCell alloc] initWithReuseIdentifier:[NSString stringWithFormat:@"QuickformElementCell%@", self.key]];
     }
+
+    cell.textLabel.text = nil; 
+    cell.detailTextLabel.text = nil; 
+    cell.imageView.image = nil; 
+
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.showsReorderControl = YES;
     cell.accessoryView = nil;
+    cell.labelingPolicy = _labelingPolicy;
     return cell;
 }
 

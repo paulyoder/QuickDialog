@@ -5,10 +5,14 @@
 "Previous" = "Previous";
 "Next" = "Next";
 "Done" = "Done";
-"Yesterday" = "Yesterday";
-"Tomorrow" = "Tomorrow";
-"1 day ago" = "1 day ago";
-"%d days ago" = "%d days ago";
-"1 week ago" = "1 week ago";
-"%d weeks ago" = "%d weeks ago";
-"Note" = "Note";
+
+
+
+"Metric %li" = "Metric %li";
+"REVENUE" = "REVENUE";
+"TRANSACTIONS" = "TRANSACTIONS";
+"CONVERSION RATE" = "CONVERSION RATE";
+"GOALS VALUE" = "GOALS VALUE";
+"GOALS TOTAL" = "GOALS TOTAL";
+"NEW VISITS" = "NEW VISITS";
+"TAP AND HOLD\nto change the metric" = "TAP AND HOLD\nto change the metric";

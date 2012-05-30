@@ -277,14 +277,18 @@
     
     NSMutableArray *component1 = [NSMutableArray array];
     for (int i = 1; i <= 12; i++) {
-        [component1 addObject:[NSNumber numberWithInt:i]];
+        [component1 addObject:[NSString stringWithFormat:@"%d", i]];
     }
     
     NSArray *component2 = [NSArray arrayWithObjects:@"A", @"B", nil];
     
-    [simplePickerSection addElement:[[QPickerElement alloc] initWithTitle:@"Key"
-                                            items:[NSArray arrayWithObjects:component1, component2, nil]
-                                                        value:nil]];
+    QPickerElement *simplePickerEl =
+        [[QPickerElement alloc] initWithTitle:@"Key"
+                                        items:[NSArray arrayWithObjects:component1, component2, nil]
+                                        value:@"3 B"];
+    simplePickerEl.onValueChanged = ^{ NSLog(@"Selected indexes: %@", [simplePickerEl.selectedIndexes componentsJoinedByString:@","]); };
+    
+    [simplePickerSection addElement:simplePickerEl];
     [root addSection:simplePickerSection];
     
     QSection *customParserSection = [[QSection alloc] initWithTitle:@"Custom value parser"];
@@ -421,9 +425,20 @@
     [sec addElement:[[QBadgeElement alloc] initWithTitle:@"Test 3" Value:@"200"]];
     [sec addElement:[[QBadgeElement alloc] initWithTitle:@"Test 4" Value:@"1000"]];
     [sec addElement:[[QBadgeElement alloc] initWithTitle:@"Test 5" Value:@"TEST"]];
+    
+    QSection *s3 = [[QSection alloc] initWithTitle:@"Labeling policies"];
+    
+    QLabelElement *trimTitleEl = [[QLabelElement alloc] initWithTitle:@"QLabelingPolicyTrimTitle" Value:@"really really really long value"];
+    trimTitleEl.labelingPolicy = QLabelingPolicyTrimTitle;  // this is default
+    [s3 addElement:trimTitleEl];
+    
+    QLabelElement *trimValueEl = [[QLabelElement alloc] initWithTitle:@"QLabelingPolicyTrimValue" Value:@"really really really long value"];
+    trimValueEl.labelingPolicy = QLabelingPolicyTrimValue;
+    [s3 addElement:trimValueEl];
 
     [root addSection:s1];
     [root addSection:s2];
+    [root addSection:s3];
     [root addSection:secImg];
 
 
@@ -577,7 +592,13 @@
     QRootElement *const root = [[QRootElement alloc] init ];
     root.title = @"Dynamic Data Sections";
     root.grouped = YES;
-    
+
+
+    QDynamicDataSection *defaultSection = [QDynamicDataSection new];
+    defaultSection.title = @"Default: loading";
+    defaultSection.emptyMessage = @"This is empty";
+    [root addSection: defaultSection];
+
     QDynamicDataSection *emptySection = [QDynamicDataSection new];
     emptySection.title = @"Empty: elements = empty list";
     emptySection.bind = @"iterate:empty";
@@ -593,10 +614,17 @@
 
     QDynamicDataSection *section = [QDynamicDataSection new];
     section.title = @"Normal: with elements";
-    [section addElement:[[QLabelElement alloc] initWithTitle:@"Something" Value:@"ok"]];
+    section.bind = @"iterate:something";
+    section.elementTemplate = [NSDictionary dictionaryWithObjectsAndKeys:
+        @"QLabelElement", @"type",
+        @"Something here", @"title",
+    nil];
     [root addSection: section];
 
-    [root bindToObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSArray array], @"empty", nil, @"nil", nil]];
+    [root bindToObject:[NSDictionary dictionaryWithObjectsAndKeys:
+            [NSArray array], @"empty",
+            [NSArray arrayWithObjects:@"first", @"second", nil], @"something",
+            nil]];
 
     return root; 
 }
