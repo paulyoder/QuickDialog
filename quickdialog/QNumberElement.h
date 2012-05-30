@@ -15,6 +15,8 @@
 
 @property(nonatomic, assign) float floatValue;
 @property(nonatomic, assign) NSUInteger fractionDigits;
+@property(nonatomic, copy) NSString * prependText;
+@property(nonatomic, copy) NSString * appendText;
 
 - (QNumberElement *)initWithTitle:(NSString *)string value:(float)value;
 - (QNumberElement *)initWithValue:(float)value;

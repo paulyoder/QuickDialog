@@ -43,8 +43,19 @@
 }
 
 - (void)updateTextFieldFromElement {
+  [self updateTextFieldFromElement:YES];
+}
+
+- (void)updateTextFieldFromElement:(BOOL)addPrependAppendText {
+  NSString * value = @"";
   QNumberElement *el = (QNumberElement *)_entryElement;
-  _textField.text = [_numberFormatter stringFromNumber:[NSNumber numberWithFloat:el.floatValue]];
+  NSString * formattedNumber = [_numberFormatter stringFromNumber:[NSNumber numberWithFloat:el.floatValue]];
+  if (addPrependAppendText && el.prependText != nil)
+    value = [value stringByAppendingString:el.prependText];
+  value = [value stringByAppendingString:formattedNumber];
+  if (addPrependAppendText && el.appendText != nil)
+    value = [value stringByAppendingString:el.appendText];
+  _textField.text = value;
 }
 
 - (void)prepareForElement:(QEntryElement *)element inTableView:(QuickDialogTableView *)view {
@@ -62,7 +73,7 @@
       [result appendString:charStr];
     }
   }
-  [self numberElement].floatValue= [[_numberFormatter numberFromString:result] floatValue];
+  [self numberElement].floatValue = [[_numberFormatter numberFromString:result] floatValue];
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)replacement {
@@ -70,7 +81,7 @@
   newValue = [self removeMultipleDecimals:newValue];
   
   [self updateElementFromTextField:newValue];
-  [self updateTextFieldFromElement];
+  [self updateTextFieldFromElement:NO];
   [self addTrailingDecimal:newValue];
   
   if(_entryElement && _entryElement.delegate && [_entryElement.delegate respondsToSelector:@selector(QEntryShouldChangeCharactersInRangeForElement:andCell:)]){
@@ -78,6 +89,27 @@
   }
   
   return NO;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+  //Remove prepend and append text when begin editing
+  QNumberElement *el = (QNumberElement *)_entryElement;
+  if (el.prependText != nil) {
+    textField.text = [textField.text substringFromIndex:el.prependText.length];
+  }
+  if (el.appendText != nil) {
+    NSUInteger lastIndexOf = [textField.text rangeOfString:el.appendText options:NSBackwardsSearch].location;
+    textField.text = [textField.text substringToIndex:lastIndexOf];
+  }
+  
+  [super textFieldDidBeginEditing:textField];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+  // add the prepend and append text after done editing
+  [self updateTextFieldFromElement:YES];
+  
+  [super textFieldDidEndEditing:textField];
 }
 
 - (NSString *)removeMultipleDecimals:(NSString *)value {

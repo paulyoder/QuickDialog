@@ -18,7 +18,8 @@
 
 @synthesize floatValue = _floatValue;
 @synthesize fractionDigits = _fractionDigits;
-
+@synthesize prependText = _prependText;
+@synthesize appendText = _appendText;
 
 - (QNumberElement *)initWithTitle:(NSString *)title value:(float)value {
   self = [super initWithTitle:title Value:nil] ;
@@ -48,6 +49,19 @@
 	if (_key==nil)
 		return;
   [obj setValue:[NSNumber numberWithFloat:_floatValue] forKey:_key];
+}
+
+- (NSString *)textValue {
+  NSString *rawValue = super.textValue;
+  NSMutableString *scrubbedValue = [[NSMutableString alloc] init];
+  for (NSUInteger i = 0; i< [rawValue length]; i++){
+    unichar c = [rawValue characterAtIndex:i];
+    NSString *charStr = [NSString stringWithCharacters:&c length:1];
+    if ([[NSCharacterSet decimalDigitCharacterSet] characterIsMember:c] || [charStr isEqualToString:@"."]) {
+      [scrubbedValue appendString:charStr];
+    }
+  }
+  return scrubbedValue;
 }
 
 @end
