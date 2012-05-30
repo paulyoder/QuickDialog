@@ -89,7 +89,7 @@
   
   [self updateElementFromTextField:newValue];
   [self updateTextFieldFromElement:NO];
-  [self addTrailingDecimal:newValue];
+  [self addTrailingDecimalAndZeros:newValue];
   
   if(_entryElement && _entryElement.delegate && [_entryElement.delegate respondsToSelector:@selector(QEntryShouldChangeCharactersInRangeForElement:andCell:)]){
     [_entryElement.delegate QEntryShouldChangeCharactersInRangeForElement:_entryElement andCell:self];
@@ -161,7 +161,7 @@
   return NO;
 }
 
-- (void)addTrailingDecimal:(NSString *)value {
+- (void)addTrailingDecimalAndZeros:(NSString *)value {
   if (value.length == 0)
     return;
   
@@ -169,9 +169,11 @@
   if (el.fractionDigits == 0)
     return;
   
-  NSString *lastChar = [value substringFromIndex:(value.length - 1)];
-  if ([lastChar isEqualToString:@"."])
-    _textField.text = [_textField.text stringByAppendingFormat:@"."];
+  NSUInteger decimalIndexOf = [value rangeOfString:@"."].location;
+  if (decimalIndexOf == NSNotFound)
+    return;
+  
+  _textField.text = value;
 }
 
 @end
