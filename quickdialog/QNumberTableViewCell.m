@@ -101,12 +101,17 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
   //Remove prepend and append text when begin editing
   QNumberElement *el = (QNumberElement *)_entryElement;
-  if (el.prependText != nil) {
+  if (el.prependText != nil && textField.text.length > el.prependText.length) {
     textField.text = [textField.text substringFromIndex:el.prependText.length];
   }
-  if (el.appendText != nil) {
+  if (el.appendText != nil && textField.text.length > el.appendText.length) {
     NSUInteger lastIndexOf = [textField.text rangeOfString:el.appendText options:NSBackwardsSearch].location;
     textField.text = [textField.text substringToIndex:lastIndexOf];
+  }
+  
+  //text length is 0 when the clear button is tapped, so clear the element value
+  if (textField.text.length == 0) {
+    [self updateElementFromTextField:@""];
   }
   
   [super textFieldDidBeginEditing:textField];
