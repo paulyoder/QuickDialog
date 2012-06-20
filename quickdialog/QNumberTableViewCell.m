@@ -109,11 +109,6 @@
     textField.text = [textField.text substringToIndex:lastIndexOf];
   }
   
-  //text length is 0 when the clear button is tapped, so clear the element value
-  if (textField.text.length == 0) {
-    [self updateElementFromTextField:@""];
-  }
-  
   [super textFieldDidBeginEditing:textField];
 }
 
@@ -122,6 +117,12 @@
   [self updateTextFieldFromElement:YES];
   
   [super textFieldDidEndEditing:textField];
+}
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField {
+  [self updateElementFromTextField:@""];
+  [self textFieldDidEndEditing:textField];
+  return YES;
 }
 
 - (BOOL)invalidInput:(NSString *)value {
